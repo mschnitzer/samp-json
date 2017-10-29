@@ -24,16 +24,16 @@ cell AMX_NATIVE_CALL json_decode(AMX* amx, cell* params)
 {
     std::string json_string = AmxUtils::amx_GetStdString(amx, &params[1]);
 
-	json_spirit::Value value;
-	auto success = json_spirit::read(json_string, value);
+    json_spirit::Value value;
+    auto success = json_spirit::read(json_string, value);
 
-	if (success == false)
+    if (success == false)
         return 0;
 
     json_data_id++;
     json_data.push_back({ json_data_id, value.get_obj() });
 
-	return json_data_id;
+    return json_data_id;
 }
 
 cell AMX_NATIVE_CALL json_get_int(AMX* amx, cell* params)
@@ -128,43 +128,43 @@ cell AMX_NATIVE_CALL json_delete(AMX* amx, cell* params)
 
 PLUGIN_EXPORT unsigned int PLUGIN_CALL Supports()
 {
-	return SUPPORTS_VERSION | SUPPORTS_AMX_NATIVES;
+    return SUPPORTS_VERSION | SUPPORTS_AMX_NATIVES;
 }
 
 PLUGIN_EXPORT bool PLUGIN_CALL Load(void **ppData)
 {
-	pAMXFunctions = ppData[PLUGIN_DATA_AMX_EXPORTS];
-	logprintf = (logprintf_t)ppData[PLUGIN_DATA_LOGPRINTF];
+    pAMXFunctions = ppData[PLUGIN_DATA_AMX_EXPORTS];
+    logprintf = (logprintf_t)ppData[PLUGIN_DATA_LOGPRINTF];
 
-	logprintf(" -----------------------------------------------------------------");
-	logprintf(" SA:MP JSON plugin version %s successfully loaded!", PLUGIN_VERSION);
-	logprintf(" Developer: Manuel Schnitzer");
-	logprintf(" -----------------------------------------------------------------");
+    logprintf(" -----------------------------------------------------------------");
+    logprintf(" SA:MP JSON plugin version %s successfully loaded!", PLUGIN_VERSION);
+    logprintf(" Developer: Manuel Schnitzer");
+    logprintf(" -----------------------------------------------------------------");
 
-	return true;
+    return true;
 }
 
 PLUGIN_EXPORT void PLUGIN_CALL Unload()
 {
-	logprintf(" * SA:MP JSON plugin was unloaded.");
+    logprintf(" * SA:MP JSON plugin was unloaded.");
 }
 
 extern "C" const AMX_NATIVE_INFO PluginNatives[] =
 {
-	{ "json_decode", json_decode },
-	{ "json_get_int", json_get_int },
-	{ "json_get_string", json_get_string },
-	{ "json_get_float", json_get_float },
-	{ "json_delete", json_delete },
-	{ 0, 0 }
+    { "json_decode", json_decode },
+    { "json_get_int", json_get_int },
+    { "json_get_string", json_get_string },
+    { "json_get_float", json_get_float },
+    { "json_delete", json_delete },
+    { 0, 0 }
 };
 
 PLUGIN_EXPORT int PLUGIN_CALL AmxLoad(AMX *amx)
 {
-	return amx_Register(amx, PluginNatives, -1);
+    return amx_Register(amx, PluginNatives, -1);
 }
 
 PLUGIN_EXPORT int PLUGIN_CALL AmxUnload(AMX *amx)
 {
-	return AMX_ERR_NONE;
+    return AMX_ERR_NONE;
 }
